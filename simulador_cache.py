@@ -21,6 +21,7 @@ class CacheSimulator:
         self.miss = 0
         self.counter_cache = 0
         self.V = [0] * self.n_lines
+        print(self.V)
     
     def acessar_dado(self, idx, dado):
             if dado in self.cache[idx]:
@@ -29,10 +30,12 @@ class CacheSimulator:
                 self.miss +=1
                 if self.counter_cache < self.line_per_group:
                     self.cache[idx].append(dado)
+                    self.V[(idx * self.line_per_group) + self.counter_cache ] = 1
                     self.counter_cache +=1
                 else:
                     new_pos = self.counter_cache % self.line_per_group
                     self.cache[idx][new_pos] = dado
+
     #printar cachê
     def print_cache(self):
         print("================")
@@ -43,9 +46,10 @@ class CacheSimulator:
         for linha in range (self.size_groups):
             for coluna in range(self.line_per_group):
                 if 0 <= linha < len(self.cache) and 0 <= coluna < len(self.cache[linha]):
-                    print(f"00{idx_print}   {self.cache[linha][coluna]}")
+                    print(f"00{idx_print} {self.V[coluna]}  {self.cache[linha][coluna]}")
+                    idx_print += 1
                 else:
-                    print(f"00{idx_print}") 
+                    print(f"00{idx_print} {self.V[coluna]}") 
                     idx_print += 1
 
     #Formatar hexa
