@@ -17,24 +17,27 @@ class CacheSimulator:
         for i, conjunto in enumerate(self.cache):
             print(f"00{i}: {conjunto}")
         
+        
         self.hits = 0
         self.miss = 0
         self.counter_cache = 0
         self.V = [0] * self.n_lines
-        print(self.V)
+       
     
     def acessar_dado(self, idx, dado):
             if dado in self.cache[idx]:
                 self.hits +=1
             else:
                 self.miss +=1
-                if self.counter_cache < self.line_per_group:
+                if len(self.cache[idx]) < self.line_per_group:
                     self.cache[idx].append(dado)
-                    self.V[(idx * self.line_per_group) + self.counter_cache ] = 1
-                    self.counter_cache +=1
+                    self.V[(idx * self.line_per_group) + len(self.cache[idx]) ] = 1
+                    
+                    
                 else:
-                    new_pos = self.counter_cache % self.line_per_group
+                    new_pos = len(self.cache[idx]) % self.line_per_group
                     self.cache[idx][new_pos] = dado
+                    
 
     #printar cachê
     def print_cache(self):
@@ -66,17 +69,25 @@ class CacheSimulator:
 
         #Mapear n-way e mapeamento direto
         if(exp_way != 0):
-            print("Testar..")
-        #    for binary_value in binary_values:
-        #        complement = address_space - len(binary_value)
-        #        binary_full = complement * '0' + binary_value
+            
+            for binary_value in binary_values:
+                complement = address_space - len(binary_value)
+                binary_full = complement * '0' + binary_value
                 
-        #        offset = int(math.log2(int(self.size_lines)))
-        #        binary_without_offset = binary_full[:-offset]
+                offset = int(math.log2(int(self.size_lines)))
+                binary_without_offset = binary_full[:-offset]
                
                
-         #       idx_block = int(binary_without_offset[-exp_way:], 2)
-         #       hexa_value = hex(int(binary_without_offset, 2)).upper()
+                idx_block = int(binary_without_offset[-exp_way:], 2)
+                hexa_value = hex(int(binary_without_offset, 2)).upper()
+
+                hexa_value = self.format_hex(hexa_value)
+                
+                
+                
+                self.acessar_dado((idx_block ), hexa_value)
+                self.print_cache()
+                
 
          #       self.acessar_dado(idx_block, hexa_value)
 
