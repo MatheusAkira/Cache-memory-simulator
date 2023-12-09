@@ -16,14 +16,11 @@ class CacheSimulator:
         self.cache = [deque(maxlen=self.line_per_group) for _ in range(self.size_groups)]
         #for i, conjunto in enumerate(self.cache):
            # print(f"00{i}: {conjunto}")
-        
-        
         self.hits = 0
         self.miss = 0
         self.counter_cache = 0
         self.V = [0] * self.n_lines
-        self.aux = [0] * self.size_groups
-       
+        self.aux = [0] * self.size_groups   
     
     def acessar_dado(self, idx, dado):
             if dado in self.cache[idx]:
@@ -44,20 +41,21 @@ class CacheSimulator:
                     self.aux[idx] +=1
                     
     #printar cachê
-    def print_cache(self):
-        print("================")
-        print("IDX V ** ADDR **")
-        idx_print =  0
+    def print_cache(self, file_path="output.txt"):
+        with open(file_path, "a") as file:
+            print("================", file=file)
+            print("IDX V ** ADDR **", file=file)
+            idx_print =  0
 
-        #Verificar se os índices estão dentro dos limites
-        for linha in range (self.size_groups):
-            for coluna in range(self.line_per_group):
-                if 0 <= linha < len(self.cache) and 0 <= coluna < len(self.cache[linha]):
-                    print(f"00{idx_print} {self.V[coluna]} {self.cache[linha][coluna]}")
-                    idx_print += 1
-                else:
-                    print(f"00{idx_print} {self.V[coluna]}") 
-                    idx_print += 1
+            #Verificar se os índices estão dentro dos limites
+            for linha in range (self.size_groups):
+                for coluna in range(self.line_per_group):
+                    if 0 <= linha < len(self.cache) and 0 <= coluna < len(self.cache[linha]):
+                        print(f"00{idx_print} {self.V[coluna]} {self.cache[linha][coluna]}", file=file)
+                        idx_print += 1
+                    else:
+                        print(f"00{idx_print} {self.V[coluna]}", file=file) 
+                        idx_print += 1
 
     #Formatar hexa
     def format_hex(self, value_hex):
@@ -87,11 +85,6 @@ class CacheSimulator:
                 hexa_value = self.format_hex(hexa_value)
                 self.acessar_dado((idx_block ), hexa_value)
                 self.print_cache()
-
-                
-
-         #       self.acessar_dado(idx_block, hexa_value)
-
              
         #Mapeamento totalmente associativo
         else:
@@ -107,11 +100,9 @@ class CacheSimulator:
                 
                 self.acessar_dado(idx_block, hexa_value)
                 self.print_cache()
-                    
-        print('\n')
-        print("#hits: ", self.hits)
-        print("#miss: ", self.miss)
-                    
 
-
-    
+        file_path="output.txt"         
+        with open(file_path, "a") as file:
+            print('\n', file=file)
+            print("#hits: ", self.hits,file=file )
+            print("#miss: ", self.miss ,file=file)
