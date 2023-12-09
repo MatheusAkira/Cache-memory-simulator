@@ -15,7 +15,7 @@ class CacheSimulator:
         self.line_per_group =  int(self.n_lines / self.size_groups) 
         self.cache = [deque(maxlen=self.line_per_group) for _ in range(self.size_groups)]
         #for i, conjunto in enumerate(self.cache):
-           # print(f"00{i}: {conjunto}")
+        #    print(f"00{i}: {conjunto}")
         self.hits = 0
         self.miss = 0
         self.counter_cache = 0
@@ -33,7 +33,6 @@ class CacheSimulator:
                     #print("ender", (idx * self.line_per_group) + (len(self.cache[idx]))  )
                     self.V[(idx * self.line_per_group) + (len(self.cache[idx])) ] = 1
                     self.cache[idx].append(dado)
-                    
                     
                 else:
                     new_pos = (len(self.cache[idx]) + self.aux[idx]) % self.line_per_group
