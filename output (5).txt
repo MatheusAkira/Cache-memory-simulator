@@ -1,3 +1,4 @@
+Saída
 ================
 IDX V ** ADDR **
 000 1 0x00032E21
@@ -10,23 +11,6 @@ IDX V ** ADDR **
 001 0
 002 1 0x0001AF22
 003 0
-================
-IDX V ** ADDR **
-000 1 0x00032E21
-001 0
-002 1 0x0001AF22
-003 1 0x000DE72E
-================
-IDX V ** ADDR **
-000 1 0x00032E21
-001 1 0x000A3CC4
-002 1 0x0001AF22
-003 1 0x000DE72E
 
 #hits: 0
-#miss: 4
-
-Parâmetros
-1) O tamanho total da cache, em bytes: 4096
-2) O tamanho de cada linha, em bytes: 1024
-3) O tamanho de cada grupo, em unidades: 2
+#miss: 2

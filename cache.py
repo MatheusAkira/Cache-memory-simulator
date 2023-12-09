@@ -14,8 +14,8 @@ class CacheSimulator:
         self.n_lines = int(self.cache_size / self.size_lines)
         self.line_per_group =  int(self.n_lines / self.size_groups) 
         self.cache = [deque(maxlen=self.line_per_group) for _ in range(self.size_groups)]
-        for i, conjunto in enumerate(self.cache):
-            print(f"00{i}: {conjunto}")
+        #for i, conjunto in enumerate(self.cache):
+           # print(f"00{i}: {conjunto}")
         
         
         self.hits = 0
@@ -28,21 +28,21 @@ class CacheSimulator:
     def acessar_dado(self, idx, dado):
             if dado in self.cache[idx]:
                 self.hits +=1
-
-                
             else:
 
                 self.miss +=1
+                
                 if len(self.cache[idx]) < self.line_per_group:
-                    self.V[(idx * self.line_per_group) +(len(self.cache[idx])) ] = 1
+                    #print("ender", (idx * self.line_per_group) + (len(self.cache[idx]))  )
+                    self.V[(idx * self.line_per_group) + (len(self.cache[idx])) ] = 1
                     self.cache[idx].append(dado)
+                    
                     
                 else:
                     new_pos = (len(self.cache[idx]) + self.aux[idx]) % self.line_per_group
                     self.cache[idx][new_pos] = dado
                     self.aux[idx] +=1
                     
-
     #printar cachê
     def print_cache(self):
         print("================")
@@ -81,16 +81,13 @@ class CacheSimulator:
                 offset = int(math.log2(int(self.size_lines)))
                 binary_without_offset = binary_full[:-offset]
                
-               
                 idx_block = int(binary_without_offset[-exp_way:], 2)
                 hexa_value = hex(int(binary_without_offset, 2)).upper()
 
                 hexa_value = self.format_hex(hexa_value)
-                
-                
-                
                 self.acessar_dado((idx_block ), hexa_value)
                 self.print_cache()
+
                 
 
          #       self.acessar_dado(idx_block, hexa_value)
